@@ -1,5 +1,8 @@
 <p align="center">
-  <img src="assets/banner.png" alt="project-context, skill para Claude Code. La configuras 1 vez y Claude recuerda tu proyecto. by liz" width="100%">
+  <picture>
+    <source media="(prefers-reduced-motion: reduce)" srcset="assets/banner.png">
+    <img src="assets/banner.gif" alt="project-context, skill para Claude Code. La configuras 1 vez y Claude recuerda tu proyecto. by liz" width="100%">
+  </picture>
 </p>
 
 <p align="center">
