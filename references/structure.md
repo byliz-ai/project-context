@@ -1,4 +1,4 @@
-# Estructura, bloque de CLAUDE.md y reglas de escritura
+# Estructura, bloques de CLAUDE.md y reglas de escritura
 
 Común a los modos init y migrate.
 
@@ -30,7 +30,7 @@ Archivos de historial (solo se agrega al final, nunca se edita ni se borra una e
 
 Si los archivos ya existen, actualízalos sin perder historial.
 
-## Bloque para CLAUDE.md
+## Bloque de registro para CLAUDE.md
 
 Conserva lo que CLAUDE.md ya tenga. Agrega el bloque siguiente completo, o reemplázalo si ya existe una versión anterior. Este bloque es lo que vuelve automático el registro, porque CLAUDE.md se carga en cada sesión. Copia el contenido que está entre las etiquetas, sin las etiquetas.
 
@@ -67,14 +67,74 @@ Reglas de escritura para .claude-context/:
 - Cada entrada con fecha en formato YYYY-MM-DD.
 </bloque_claude_md>
 
+## Bloque de pautas de trabajo para CLAUDE.md
+
+Cuatro pautas para que Claude no suponga, no sobrecomplique y cambie solo lo pedido. Están adaptadas de https://github.com/multica-ai/andrej-karpathy-skills (licencia MIT), basado en las observaciones de Andrej Karpathy sobre los errores típicos de los modelos al programar.
+
+- Agrégalo a CLAUDE.md después del bloque de registro, o reemplázalo si ya existe una versión anterior (se reconoce por el título "## Cómo trabajar").
+- Si CLAUDE.md ya trae estas pautas en otra forma, por ejemplo el CLAUDE.md original de ese repositorio en inglés (empieza con "Behavioral guidelines to reduce common LLM coding mistakes" o tiene la sección "Think Before Coding"), no las dupliques: deja las que hay y no agregues este bloque.
+
+Copia el contenido que está entre las etiquetas, sin las etiquetas.
+
+<bloque_pautas>
+## Cómo trabajar
+Pautas para evitar los errores más comunes al programar o editar archivos, adaptadas de las observaciones de Andrej Karpathy (github.com/multica-ai/andrej-karpathy-skills). Favorecen la cautela sobre la velocidad: en tareas triviales, usa criterio. Si una preferencia de este proyecto contradice una pauta, manda la preferencia.
+
+### 1. Pensar antes de programar
+No supongas, no escondas la confusión, muestra las alternativas.
+- Di tus suposiciones de forma explícita. Si dudas, pregunta.
+- Si la petición admite varias interpretaciones, preséntalas; no elijas una en silencio.
+- Si hay un enfoque más simple, dilo. Contradice al usuario cuando haga falta.
+- Si algo no está claro, detente, nombra qué te confunde y pregunta.
+
+### 2. Simplicidad primero
+El mínimo código que resuelve el problema. Nada especulativo.
+- Ninguna funcionalidad que no se haya pedido.
+- Ninguna abstracción para código que se usa una sola vez.
+- Ninguna flexibilidad ni opción de configuración que no se haya pedido.
+- Ningún manejo de errores para escenarios imposibles.
+- Si escribiste 200 líneas y podían ser 50, reescríbelo.
+
+Pregúntate si un ingeniero senior diría que está sobrecomplicado. Si la respuesta es sí, simplifica.
+
+### 3. Cambios quirúrgicos
+Toca solo lo necesario. Limpia solo tu propio desorden.
+- No "mejores" el código, los comentarios ni el formato vecinos.
+- No refactorices lo que no está roto.
+- Sigue el estilo existente, aunque tú lo harías distinto.
+- Si ves código muerto ajeno a la tarea, menciónalo; no lo borres.
+- Quita los imports, variables o funciones que tus cambios dejaron sin uso. El código muerto que ya existía no se borra salvo que te lo pidan.
+
+Prueba: cada línea cambiada debe responder directamente a lo que pidió el usuario.
+
+### 4. Ejecución guiada por metas
+Define criterios de éxito. Repite hasta verificarlos.
+
+Convierte cada tarea en una meta verificable:
+- "Agrega validación": escribe pruebas con entradas inválidas y luego haz que pasen.
+- "Arregla el error": escribe una prueba que lo reproduzca y luego haz que pase.
+- "Refactoriza X": asegúrate de que las pruebas pasen antes y después.
+
+En tareas de varios pasos, plantea un plan breve:
+```
+1. [Paso] → verificar: [comprobación]
+2. [Paso] → verificar: [comprobación]
+3. [Paso] → verificar: [comprobación]
+```
+
+Con criterios claros puedes avanzar solo; con criterios vagos ("que funcione") hay que pedir aclaraciones a cada rato.
+
+Señales de que las pautas funcionan: diffs sin cambios innecesarios, menos reescrituras por sobrecomplicación, y preguntas aclaratorias antes de implementar, no después de equivocarse.
+</bloque_pautas>
+
 ## Reglas de escritura
 
-Aplica al escribir los archivos de .claude-context/ las mismas reglas de escritura del bloque, y fecha cada archivo con la fecha de hoy.
+Aplica al escribir los archivos de .claude-context/ las mismas reglas de escritura del bloque de registro, y fecha cada archivo con la fecha de hoy.
 
 ## Proyectos que conservan su propia estructura
 
 Cuando en el modo migrate el usuario elige conservar sus archivos existentes como fuente de verdad:
 
 - 00_README_FIRST.md contiene el mapa: para cada rol (estado, decisiones, preferencias, lecciones, pendientes), la ruta del archivo que lo cumple.
-- En el bloque de CLAUDE.md, las rutas de los @ y de cada evento del registro continuo se cambian por las del mapa.
+- En el bloque de registro de CLAUDE.md, las rutas de los @ y de cada evento del registro continuo se cambian por las del mapa.
 - .claude-context/log_paths.txt lista, una por línea y relativas a la raíz, las rutas de los archivos o carpetas existentes que funcionan como registro. El hook de cierre lo usa para reconocer que el registro sí se actualizó.

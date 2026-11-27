@@ -30,6 +30,13 @@ Esta skill le pone al proyecto una libreta de notas. Mientras trabajas, Claude a
 
 Cuando abres un chat nuevo, Claude lee esa libreta antes de empezar. Tú no tienes que pedirle que anote ni que lea nada.
 
+Además, le deja a Claude cuatro pautas de trabajo para que no meta la pata por apurado. Vienen de las observaciones de Andrej Karpathy sobre los errores típicos de la IA al programar ([andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills), licencia MIT):
+
+- pregunta antes de suponer,
+- hace lo más simple que resuelve el problema,
+- cambia solo lo que le pediste,
+- define cómo comprobar que quedó bien, y lo comprueba.
+
 Se configura una sola vez por proyecto.
 
 ## Antes y después
@@ -105,7 +112,7 @@ Deja este proyecto listo para que otros chats sigan sin empezar de cero.
 Qué pasa:
 
 - Claude crea una carpeta `.claude-context/` con la libreta del proyecto.
-- Agrega unas instrucciones a tu archivo `CLAUDE.md` (si no existe, lo crea).
+- Agrega a tu archivo `CLAUDE.md` las instrucciones para anotar y las cuatro pautas de trabajo (si no existe, lo crea).
 - Te muestra dónde quedaron y te pide revisar cualquier cosa que no pudo confirmar.
 
 Desde ese momento ya anota solo.
@@ -229,6 +236,9 @@ Son archivos de texto normales. Puedes abrirlos y editarlos tú.
 **¿Tengo que correrlo en cada chat?**
 No. Una vez por proyecto. Los chats nuevos lo encuentran solos.
 
+**Configuré proyectos antes de que existieran las pautas de trabajo. ¿Cómo se las agrego?**
+Abre el proyecto en Claude Code y vuelve a escribir `/project-context`. Agrega las pautas a tu `CLAUDE.md` sin tocar lo demás ni repetir la migración.
+
 **¿Me va a borrar o cambiar mis archivos?**
 No borra, no mueve y no renombra nada. En proyectos que ya van andando, te muestra el plan y espera tu aprobación antes de escribir.
 
@@ -267,7 +277,7 @@ Para quitarla del todo, borra también la carpeta `~/.claude/skills/project-cont
 
 La skill tiene tres piezas:
 
-1. **Las instrucciones en `CLAUDE.md`.** Claude Code lee ese archivo al abrir cada chat. Ahí dice cuándo anotar y en qué archivo.
+1. **Las instrucciones en `CLAUDE.md`.** Claude Code lee ese archivo al abrir cada chat. Ahí dice cuándo anotar y en qué archivo, y están las cuatro pautas de trabajo.
 2. **Dos hooks**, que son pequeños programas que Claude Code corre solo:
    - Al abrir un chat, le recuerda a Claude que el proyecto tiene libreta.
    - Al terminar cada respuesta, revisa si cambiaron archivos sin que se anotara nada, y si es así le pide a Claude revisar.

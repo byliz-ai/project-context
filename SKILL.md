@@ -1,11 +1,13 @@
 ---
 name: project-context
-description: ES — Memoria de proyecto para Claude Code con registro automático de decisiones, en tres modos. init, para un proyecto nuevo o vacío. migrate, para un proyecto que ya va andando, con chats anteriores, su propio CLAUDE.md u otra estructura. handoff, para pasar un chat normal a un proyecto. Crea .claude-context/ y la regla de registro continuo en CLAUDE.md, de modo que cada decisión, corrección o preferencia se anote sola y cualquier chat nuevo continúe sin empezar de cero. Activar con /project-context, "inicializa el contexto", "deja el proyecto listo para otra sesión", "migra este proyecto", "este proyecto ya tiene varios chats", "rescata las decisiones de los chats anteriores", "pasa este chat a un proyecto", "prepara el handoff". EN — Persistent project memory for Claude Code with automatic decision logging. Three modes: init (new project), migrate (in-flight project with prior sessions or its own structure), handoff (move a regular chat into a project). Trigger on "init context", "set up project memory", "migrate this project", "prepare a handoff".
+description: ES — Memoria de proyecto para Claude Code con registro automático de decisiones, en tres modos. init, para un proyecto nuevo o vacío. migrate, para un proyecto que ya va andando, con chats anteriores, su propio CLAUDE.md u otra estructura. handoff, para pasar un chat normal a un proyecto. Crea .claude-context/, la regla de registro continuo y las pautas de trabajo de Karpathy en CLAUDE.md, de modo que cada decisión, corrección o preferencia se anote sola y cualquier chat nuevo continúe sin empezar de cero. Activar con /project-context, "inicializa el contexto", "deja el proyecto listo para otra sesión", "migra este proyecto", "este proyecto ya tiene varios chats", "rescata las decisiones de los chats anteriores", "pasa este chat a un proyecto", "prepara el handoff". EN — Persistent project memory for Claude Code with automatic decision logging. Three modes: init (new project), migrate (in-flight project with prior sessions or its own structure), handoff (move a regular chat into a project). Trigger on "init context", "set up project memory", "migrate this project", "prepare a handoff".
 ---
 
 # project-context
 
 Deja un proyecto preparado para que cualquier sesión futura de Claude Code continúe sin empezar desde cero, y para que las decisiones y cambios importantes queden anotados en el momento en que ocurren, sin que el usuario lo pida. Lo segundo es lo más importante: el usuario no va a acordarse de pedirlo y las sesiones se cortan sin aviso, así que lo que no se anota en el momento se pierde.
+
+Además deja en CLAUDE.md cuatro pautas de trabajo, adaptadas de las de Andrej Karpathy, para que Claude pregunte antes de suponer, no sobrecomplique y cambie solo lo pedido.
 
 Se corre una sola vez por proyecto. Después, cada chat nuevo se entera solo, por CLAUDE.md y por el hook de inicio de sesión.
 
@@ -16,11 +18,11 @@ Las rutas de este documento son relativas a la carpeta de esta skill.
 Si el usuario pasó un argumento (init, migrate o handoff), usa ese modo. Si no, decide así, en este orden, y dilo en una línea antes de empezar:
 
 1. handoff: el usuario pide el prompt para sacar el contexto de un chat normal, o habla de un chat que está fuera de Claude Code. Lee references/handoff.md.
-2. Ya inicializado: existe .claude-context/ en el proyecto. No reinicialices. Si hay chats anteriores o archivos HANDOFF sin procesar, sigue references/migrate.md en su forma incremental; si no, solo actualiza lo que haya cambiado.
+2. Ya inicializado: existe .claude-context/ en el proyecto. No reinicialices. Si hay chats anteriores o archivos HANDOFF sin procesar, sigue references/migrate.md en su forma incremental; si no, solo actualiza lo que haya cambiado. Si a CLAUDE.md le falta alguno de los dos bloques de references/structure.md (por ejemplo el de pautas de trabajo, que se agregó después), agrégalo sin tocar lo demás.
 3. migrate: el proyecto ya va andando. Señales: CLAUDE.md con contenido propio; archivos de notas, estado o decisiones con otra estructura; o chats anteriores además de este, según `bash scripts/list-sessions.sh "<raíz del proyecto>"`. Lee references/migrate.md.
 4. init: nada de lo anterior. Lee references/init.md.
 
-Los modos init y migrate usan además references/structure.md, que define los seis archivos, el bloque exacto para CLAUDE.md y las reglas de escritura. Léelo antes de escribir.
+Los modos init y migrate usan además references/structure.md, que define los seis archivos, los dos bloques exactos para CLAUDE.md (registro continuo y pautas de trabajo) y las reglas de escritura. Léelo antes de escribir.
 
 ## Reglas comunes a todos los modos
 

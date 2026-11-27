@@ -12,7 +12,7 @@ Para un proyecto sin historia previa: sin chats anteriores, sin CLAUDE.md propio
 
 1. Lee references/structure.md.
 2. Crea .claude-context/ con los seis archivos y llénalos con lo que conste en las fuentes.
-3. Crea o actualiza CLAUDE.md con el bloque de registro continuo.
+3. Crea o actualiza CLAUDE.md con los dos bloques de references/structure.md: registro continuo y pautas de trabajo.
 4. Comprueba los hooks como indica SKILL.md.
 5. Muestra para validar, sin hacer commit:
    - La sección "Where we left off" de project_status.md.
